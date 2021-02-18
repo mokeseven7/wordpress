@@ -1,0 +1,16 @@
+{
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.wordWrap": "on",
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "npm.enableTouchbar": true,
+    "workbench.tree.expandMode": "singleClick",
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "editor.tokenColorCustomizations": {
+        "[Horizon]": {
+            "comments": "#646262"
+        }
+    }
+}
+

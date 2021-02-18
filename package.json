@@ -1,8 +1,9 @@
 {
-  "name": "infra",
+  "name": "mokeseven7press",
+  "description": "Wordpress infra",
   "version": "0.1.0",
   "bin": {
-    "infra": "bin/infra.js"
+    "lambda-wordpress": "bin/lambda-wordpress.js"
   },
   "scripts": {
     "build": "tsc",
@@ -21,7 +22,15 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
+    "@aws-cdk/aws-ec2": "^1.90.0",
+    "@aws-cdk/aws-efs": "^1.90.0",
+    "@aws-cdk/aws-elasticloadbalancingv2": "^1.90.0",
+    "@aws-cdk/aws-elasticloadbalancingv2-targets": "^1.90.0",
+    "@aws-cdk/aws-lambda": "^1.90.0",
+    "@aws-cdk/aws-rds": "^1.90.0",
+    "@aws-cdk/aws-secretsmanager": "^1.90.0",
     "@aws-cdk/core": "1.90.0",
+    "path": "^0.12.7",
     "source-map-support": "^0.5.16"
   }
 }
