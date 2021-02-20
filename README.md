@@ -53,6 +53,11 @@ $cdk deploy
 sudo mount -t efs <ebs_id_from_deploy>:/ /mnt/efs
 ```
 
+6. Clone the wordpress source into the newly mounted drive:
+```js
+$ cd wordpress && git clone git@github.com:forhead/wordpressForLambda.git . 
+```
+
 # Configuration
 
 Update the context variables held in the cdk.json file to suit your needs. 
