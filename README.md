@@ -15,16 +15,43 @@ Comming Soon
 
 This guide walks you through the steps of setting up the project from scrach, if you want to get to coding right awawy, skip ahead to the coding section.
 
-Start by creating a working directory, and initilailzing the cdk 
+Start by creating a working directory, and initilailzing the cdk, and opening the project in your text editor of choice.
 
 ```
 mkdir wordpress-stack && cd wordpress-stack && ckd init -l typescript
 ```
 
+Once you have the new intialized cdk app, install the required dependencies:
 
-> This guide walks you through the steps of setting up the project from scrach, if you want to get to coding right awawy, skip ahead to the coding section
+```js
+npm install @aws-cdk/aws-ec2 @aws-cdk/aws-efs @aws-cdk/aws-lambda @aws-cdk/aws-rds @aws-cdk/aws-elasticloadbalancingv2 @aws-cdk/aws-elasticloadbalancingv2-targets @aws-cdk/aws-secretsmanager path
+```
 
 
+
+
+> Note - Running the command below with provision resource in AWS and you will be charged. 
+
+1. Synthesize the stack, and inspect the resources that will be created.
+
+```js
+$ cdk synth
+```
+
+2. Deploy the application 
+
+```js
+$cdk deploy
+```
+
+
+....
+
+5. Log into the filesystem, and mount the wordpress share
+
+```
+sudo mount -t efs <ebs_id_from_deploy>:/ /mnt/efs
+```
 
 # Configuration
 
