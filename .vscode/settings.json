@@ -11,6 +11,17 @@
         "[Horizon]": {
             "comments": "#646262"
         }
-    }
+    },
+    "debug.javascript.autoAttachFilter": "onlyWithFlag",
+    "debug.javascript.terminalOptions": {
+    "skipFiles": [
+      "<node_internals>/**"
+    ]
+  },
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.inlineValues": true,
+  "debug.internalConsoleOptions": "openOnSessionStart",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsserver.enableTracing": true
 }
 

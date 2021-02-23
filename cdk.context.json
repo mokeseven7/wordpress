@@ -1,0 +1,16 @@
+{
+  "availability-zones:account=218924408251:region=us-east-1": [
+    "us-east-1a",
+    "us-east-1b",
+    "us-east-1c",
+    "us-east-1d",
+    "us-east-1e",
+    "us-east-1f"
+  ],
+  "@aws-cdk/core:enableStackNameDuplicates": "true",
+    "aws-cdk:enableDiffNoFail": "true",
+    "domainName": "autoloadthis.com",
+    "keyName": "cdkwordpress",
+    "dbPassword":"Pineapple1",
+    "certificateArn":"arn:aws:acm:us-east-1:218924408251:certificate/d29e20f9-8f95-4709-ad93-8b485406bf84"
+}

@@ -14,9 +14,14 @@ $extension_map = array(
 $request_uri = explode("?", $_SERVER['REQUEST_URI']);
 $local_file_path = getenv('WORDPRESS_PATH')  . $request_uri[0];
 
+
 $split = explode(".", $local_file_path);
+
 $extension = strtolower(array_pop($split));
+
 $mapped_type = null;
+
+
 if (isset($extension_map[$extension])) {
     $mapped_type = $extension_map[$extension];
 }

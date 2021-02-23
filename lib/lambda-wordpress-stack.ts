@@ -1,13 +1,15 @@
+import * as path from 'path';
 import * as cdk from '@aws-cdk/core';
 import * as ec2 from '@aws-cdk/aws-ec2';
+import * as cfn from '@aws-cdk/aws-cloudformation';
 import * as efs from '@aws-cdk/aws-efs';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as rds from '@aws-cdk/aws-rds';
 import * as elbv2 from '@aws-cdk/aws-elasticloadbalancingv2';
 import * as targets from '@aws-cdk/aws-elasticloadbalancingv2-targets';
-import * as cm from '@aws-cdk/aws-certificatemanager';
-import { ApplicationTargetGroup, ApplicationProtocol, ListenerAction } from '@aws-cdk/aws-elasticloadbalancingv2'
-import * as path from 'path';
+import { Certificate } from '@aws-cdk/aws-certificatemanager';
+import { ListenerAction } from '@aws-cdk/aws-elasticloadbalancingv2'
+
 
 
 export class LambdaWordpressStack extends cdk.Stack {
@@ -29,6 +31,8 @@ export class LambdaWordpressStack extends cdk.Stack {
     const KEY_NAME = this.node.tryGetContext('keyName');
     const DOMAIN_NAME = this.node.tryGetContext('domainName');
     const DB_PASSWORD = this.node.tryGetContext('dbPassword');
+    const CERTIFICATE_ARN = this.node.tryGetContext('certificateArn');
+
 
     /**
      * Service: Amazon Certificate Manager
@@ -36,10 +40,7 @@ export class LambdaWordpressStack extends cdk.Stack {
      * 
      * Description: Get ssl cert from ACM is desired
      */
-    const myCertificate = new cm.Certificate(this, 'myCertificate', {
-      domainName: DOMAIN_NAME,
-      validation: cm.CertificateValidation.fromDns(),
-    });
+    const myCertificate = Certificate.fromCertificateArn(this, 'myCertificate', CERTIFICATE_ARN);
 
     /**
      * Service: Amazon Compute 
@@ -130,11 +131,13 @@ export class LambdaWordpressStack extends cdk.Stack {
     const fileSystem = new efs.FileSystem(this, 'wordpressEFS', {
       vpc: serverlessVPC,
       encrypted: false,
+      securityGroup: sgNFSSG,
       performanceMode: efs.PerformanceMode.GENERAL_PURPOSE,
       throughputMode: efs.ThroughputMode.BURSTING,
-      securityGroup: sgNFSSG,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
+
+
     //Yes, were officially setting posix functions programically with typescript. We've reached the future. 
     const accessPoint = fileSystem.addAccessPoint('LambdaAccessPoint', {
       path: ACCESSPOINT_PATH,
@@ -231,7 +234,7 @@ export class LambdaWordpressStack extends cdk.Stack {
      * Service: Amazon Relational Database Service
      * Docs: https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html
      *
-     * Description: Serverless database BAYBEEEE
+     * Description: Serverless database bayBEEEBEEEE
      * TODO: We can get the creds a bunch of different ways. Probably ssm for prod
      */
     DB_HOST = auroraServerlessCluster.clusterEndpoint.hostname;
@@ -253,6 +256,8 @@ export class LambdaWordpressStack extends cdk.Stack {
       storage: ec2.AmazonLinuxStorage.GENERAL_PURPOSE,
     });
 
+
+    //Now 
     const ec2EFS = new ec2.Instance(this, 'efsInstance', {
       vpc: serverlessVPC,
       vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
@@ -262,11 +267,26 @@ export class LambdaWordpressStack extends cdk.Stack {
       keyName: KEY_NAME,
     });
 
-    ec2EFS.userData.addCommands(
+    fileSystem.connections.allowDefaultPortFrom(ec2EFS);
+    fileSystem.connections.addSecurityGroup([sg - 0f709e346b7df21be])
+
+    ec2EFS.userData.addCommands("yum check-update -y",
       //install efs tool and create mount point
-      'sudo yum install -y amazon-efs-utils',
+      "yum upgrade -y",
+      "yum install -y amazon-efs-utils",
+      "yum install -y nfs-utils",
+
       'sudo mkdir /mnt',
       'sudo mkdir /mnt/efs',
+
+      "file_system_id_1=" + fileSystem.fileSystemId,
+      "efs_mount_point_1=/mnt/efs/fs1",
+
+      "echo \"${file_system_id_1}.efs." + cdk.Stack.of(this).region + ".amazonaws.com:/ ${efs_mount_point_1} nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0\" >> /etc/fstab",
+      "mount -a -t efs,nfs4 defaults"
+
+
+
     );
 
     new cdk.CfnOutput(this, 'outputEFS', {
@@ -279,4 +299,5 @@ export class LambdaWordpressStack extends cdk.Stack {
       value: 'alb dns name: ' + lb.loadBalancerDnsName,
     });
   }
+
 }

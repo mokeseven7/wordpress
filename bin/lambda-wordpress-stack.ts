@@ -4,5 +4,12 @@ import * as cdk from '@aws-cdk/core';
 import { LambdaWordpressStack } from '../lib/lambda-wordpress-stack';
 
 const app = new cdk.App();
-new LambdaWordpressStack(app, 'LambdaWordpressStack');
+
+
+new LambdaWordpressStack(app, 'LambdaWordpressStack', {
+    env: {
+        region: 'us-east-1',
+        account: '218924408251'
+    }
+});
 

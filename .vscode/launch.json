@@ -3,9 +3,9 @@
     "configurations": [
 
         {
-        "type": "node",
+            "type": "pwa-node",
         "request": "launch",
-        "name": "Launch Program",
+        "name": "CDK Launch Debug",
         "skipFiles": [
             "<node_internals>/**"
         ],
@@ -13,7 +13,7 @@
             "-r", "./node_modules/ts-node/register/transpile-only"
         ],
         "args": [
-            "${workspaceFolder}/bin/aws-cdk-vscode-example.ts"
+            "${workspaceFolder}/bin/lambda-wordpress.ts"
         ]
         }
     ]

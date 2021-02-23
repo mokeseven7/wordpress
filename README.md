@@ -1,6 +1,7 @@
 # APG Team CDK Infra For Wordpress
 
-This repo contains the CDK constructs to create the cloudformation required for a wordpress site. 
+This repo contains the CDK constructs generate the required for a wordpress site. While there are a few manual steps, its assumed this would be executed via the ordcestration tool of your choice. When using CDK its important to remember, CDK is the "what", not the how.  
+
 
 ## Infra Diagram
 Comming Soon
@@ -31,6 +32,7 @@ npm install @aws-cdk/aws-ec2 @aws-cdk/aws-efs @aws-cdk/aws-lambda @aws-cdk/aws-r
 
 
 > Note - Running the command below with provision resource in AWS and you will be charged. 
+
 
 1. Synthesize the stack, and inspect the resources that will be created.
 
