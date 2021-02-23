@@ -1,4 +1,4 @@
-# APG Team CDK Infra For Wordpress
+# CDK Infra For Wordpress
 
 This repo contains the CDK constructs generate the required for a wordpress site. While there are a few manual steps, its assumed this would be executed via the ordcestration tool of your choice. When using CDK its important to remember, CDK is the "what", not the how.  
 
